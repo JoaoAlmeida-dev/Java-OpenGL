@@ -29,6 +29,8 @@ public class GameEngine implements Runnable {
 			gameLoop();
 		} catch (Exception excp) {
 			excp.printStackTrace();
+		} finally {
+			cleanup();
 		}
 	}
 
@@ -76,6 +78,10 @@ public class GameEngine implements Runnable {
 		window.update();
 	}
 
+	protected void cleanup() {
+		gameLogic.cleanup();
+	}
+	
 	private void sync() {
 		float loopSlot = 1f / 50;
 		double endTime = timer.getLastLoopTime() + loopSlot;
