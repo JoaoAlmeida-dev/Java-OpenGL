@@ -2,6 +2,6 @@
 
 layout (location=0) in vec3 position;
 
-void HelloWorld() {
+void org.lwjglb.Chapter1() {
     gl_Position = vec4(position, 1.0);
 }
