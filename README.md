@@ -6,6 +6,10 @@
 * [GitHub_lwjglbook](https://github.com/lwjglgamedev/lwjglbook)
 * [lwjglbook](https://ahbejarano.gitbook.io/lwjglgamedev/)
 
+### Should probably follow his other tutorial on vulkan
+
+* [vulkanbook](https://github.com/lwjglgamedev/vulkanbook)
+
 ### Notes
 
 Probably should read:
