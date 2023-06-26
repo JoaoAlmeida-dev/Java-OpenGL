@@ -9,10 +9,10 @@ public class Engine {
     private final IAppLogic appLogic;
     private final Window window;
     private final Render render;
-    private boolean running;
     private final Scene scene;
     private final int targetFps;
     private final int targetUps;
+    private boolean running;
 
     public Engine(String windowTitle, Window.WindowOptions opts, IAppLogic appLogic) {
         window = new Window(windowTitle, opts, () -> {
@@ -23,7 +23,7 @@ public class Engine {
         targetUps = opts.ups;
         this.appLogic = appLogic;
         render = new Render();
-        scene = new Scene();
+        scene = new Scene(window.getWidth(), window.getHeight());
         appLogic.init(window, scene, render);
         running = true;
     }
@@ -36,6 +36,7 @@ public class Engine {
     }
 
     private void resize() {
+        scene.resize(window.getWidth(), window.getHeight());
         // Nothing to be done yet
     }
 

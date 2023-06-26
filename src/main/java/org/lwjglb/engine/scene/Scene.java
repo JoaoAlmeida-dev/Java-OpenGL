@@ -5,10 +5,12 @@ import org.lwjglb.engine.graph.Mesh;
 import java.util.*;
 
 public class Scene {
+    private final Projection projection;
     private Map<String, Mesh> meshMap;
 
-    public Scene() {
+    public Scene(int width, int height) {
         meshMap = new HashMap<>();
+        projection = new Projection(width, height);
     }
 
     public void addMesh(String meshId, Mesh mesh) {
@@ -22,4 +24,13 @@ public class Scene {
     public Map<String, Mesh> getMeshMap() {
         return meshMap;
     }
+
+    public Projection getProjection() {
+        return projection;
+    }
+
+    public void resize(int width, int heigth) {
+        projection.updateProjMatrix(width, heigth);
+    }
+
 }

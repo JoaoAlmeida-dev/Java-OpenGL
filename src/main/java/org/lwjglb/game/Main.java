@@ -9,7 +9,7 @@ public class Main implements IAppLogic {
 
     public static void main(String[] args) {
         Main main = new Main();
-        Engine gameEng = new Engine("chapter-04", new Window.WindowOptions(), main);
+        Engine gameEng = new Engine("chapter-05", new Window.WindowOptions(), main);
         gameEng.start();
     }
 
@@ -21,10 +21,10 @@ public class Main implements IAppLogic {
     @Override
     public void init(Window window, Scene scene, Render render) {
         float[] positions = new float[]{
-                -0.5f, 0.5f, 0.0f,
-                -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                0.5f, 0.5f, 0.0f,
+                -0.5f, 0.5f, -10.0f,
+                -0.5f, -0.5f, -10.0f,
+                0.5f, -0.5f, -10.0f,
+                0.5f, 0.5f, -10.0f,
         };
         float[] colors = new float[]{
                 0.5f, 0.0f, 0.0f,
