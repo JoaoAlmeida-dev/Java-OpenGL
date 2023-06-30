@@ -18,4 +18,5 @@ Probably should read:
 
 ## Screenshots
 
+![Pixels test](resources/screenshots/pixelsTest.png)
 ![first triangle](resources/screenshots/first triangle.PNG)

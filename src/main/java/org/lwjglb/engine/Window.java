@@ -18,14 +18,6 @@ public class Window {
     private Callable<Void> resizeFunc;
     private int width;
 
-    public static class WindowOptions {
-        public boolean compatibleProfile;
-        public int fps;
-        public int height;
-        public int ups = Engine.TARGET_UPS;
-        public int width;
-    }
-
     public Window(String title, WindowOptions opts, Callable<Void> resizeFunc) {
         this.resizeFunc = resizeFunc;
         if (!GLFW.glfwInit()) {
@@ -140,6 +132,22 @@ public class Window {
 
     public boolean windowShouldClose() {
         return GLFW.glfwWindowShouldClose(windowHandle);
+    }
+
+    public static class WindowOptions {
+        public boolean compatibleProfile;
+        public int fps;
+        public int height;
+        public int ups = Engine.TARGET_UPS;
+        public int width;
+
+        public WindowOptions() {
+        }
+
+        public WindowOptions(int height, int width) {
+            this.height = height;
+            this.width = width;
+        }
     }
 
 
