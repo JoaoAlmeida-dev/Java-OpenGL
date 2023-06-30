@@ -69,19 +69,22 @@ public class PixelMatrixGPUPrep {
         ArrayList<Integer> indicesArrayList = new ArrayList<>(rawPixelMatrixSize + 1);
         ArrayList<Float> colorsArrayList = new ArrayList<>(rawPixelMatrixSize + 1);
 
-        float pixelSizex = Math.abs(xRight - xLeft);
-        float pixelSizey = Math.abs(yBot - yTop);
+
+        int numVertexPerPixel = 4;
+        float z = -50;
 
         int currentPixelIndex = 0;
-        int numVertex = 4;
-        float z = -50 * rawPixelMatrix.length;
+        float pixelSizex = Math.abs(xRight - xLeft) / rawPixelMatrix.length;
+        float pixelSizey;
         for (int row = 0; row < rawPixelMatrix.length; row++) {
+            pixelSizey = Math.abs(yBot - yTop) / rawPixelMatrix[row].length;
+            System.out.println("pixelSizex: " + pixelSizex + "; pixelSizey: " + pixelSizey);
             for (int col = 0; col < rawPixelMatrix[row].length; col++) {
-                float xLeft = this.xLeft + col * pixelSizex;
-                float xRight = this.xLeft + (col + 1) * pixelSizex;
-                float yTop = this.yTop + row * pixelSizey;
-                float yBot = this.yTop + (row - 1) * pixelSizey;
-                //System.out.println("xLeft: " + xLeft + "; xRight: " + xRight + "; yTop: " + yTop + ",yBot: " + yBot);
+                float xLeft = this.xLeft + (col * pixelSizex);
+                float xRight = this.xLeft + ((col + 1) * pixelSizex);
+                float yTop = this.yTop - (row * pixelSizey);
+                float yBot = this.yTop - ((row + 1) * pixelSizey);
+                System.out.println("xLeft: " + xLeft + "; xRight: " + xRight + "; yTop: " + yTop + ",yBot: " + yBot);
 
 
                 Vec3 topLeftCorner = new Vec3(xLeft, yTop, z);
@@ -94,12 +97,12 @@ public class PixelMatrixGPUPrep {
                 positionsArrayList.addAll(List.of(topRightCorner.toArray()));
                 positionsArrayList.addAll(List.of(botRightCorner.toArray()));
 
-                indicesArrayList.add(currentPixelIndex * numVertex);
-                indicesArrayList.add(currentPixelIndex * numVertex + 1);
-                indicesArrayList.add(currentPixelIndex * numVertex + 2);
-                indicesArrayList.add(currentPixelIndex * numVertex + 2);
-                indicesArrayList.add(currentPixelIndex * numVertex + 3);
-                indicesArrayList.add(currentPixelIndex * numVertex);
+                indicesArrayList.add(currentPixelIndex * numVertexPerPixel);
+                indicesArrayList.add(currentPixelIndex * numVertexPerPixel + 1);
+                indicesArrayList.add(currentPixelIndex * numVertexPerPixel + 2);
+                indicesArrayList.add(currentPixelIndex * numVertexPerPixel + 2);
+                indicesArrayList.add(currentPixelIndex * numVertexPerPixel + 3);
+                indicesArrayList.add(currentPixelIndex * numVertexPerPixel);
                 //System.out.println("positionsArrayList" + positionsArrayList);
                 //System.out.println("indicesArrayList" + indicesArrayList);
 
