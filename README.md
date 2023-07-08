@@ -18,5 +18,6 @@ Probably should read:
 
 ## Screenshots
 
+![3D cube](resources/screenshots/3dcube_chapter8.png)
 ![Pixels test](resources/screenshots/pixelsTest.png)
 ![first triangle](resources/screenshots/first triangle.PNG)

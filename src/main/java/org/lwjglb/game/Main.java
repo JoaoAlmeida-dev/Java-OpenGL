@@ -18,7 +18,7 @@ import java.util.List;
 public class Main implements IAppLogic {
 
     private static final float MOUSE_SENSITIVITY = 0.1f;
-    private static final float MOVEMENT_SPEED = 0.005f;
+    private static final float BASE_MOVEMENT_SPEED = 0.005f;
     private Entity cubeEntity;
     private Vector4f displInc = new Vector4f();
     private float rotation;
@@ -93,6 +93,7 @@ public class Main implements IAppLogic {
 
     @Override
     public void input(Window window, Scene scene, long diffTimeMillis) {
+        float movementSpeed = BASE_MOVEMENT_SPEED;
         displInc.zero();
         if (window.isKeyPressed(GLFW.GLFW_KEY_UP)) {
             displInc.y = 1;
@@ -114,8 +115,10 @@ public class Main implements IAppLogic {
         } else if (window.isKeyPressed(GLFW.GLFW_KEY_X)) {
             displInc.w = 1;
         }
-
-        float move = diffTimeMillis * MOVEMENT_SPEED;
+        if (window.isKeyPressed(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+            movementSpeed *= 3;
+        }
+        float move = diffTimeMillis * movementSpeed;
         Camera camera = scene.getCamera();
         if (window.isKeyPressed(GLFW.GLFW_KEY_W)) {
             camera.moveForward(move);
@@ -132,6 +135,7 @@ public class Main implements IAppLogic {
         } else if (window.isKeyPressed(GLFW.GLFW_KEY_LEFT_CONTROL)) {
             camera.moveDown(move);
         }
+
 
         MouseInput mouseInput = window.getMouseInput();
         if (mouseInput.isRightButtonPressed()) {
