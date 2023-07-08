@@ -1,5 +1,6 @@
 package org.lwjglb.game;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
@@ -7,6 +8,7 @@ import org.lwjglb.engine.*;
 import org.lwjglb.engine.graph.Mesh;
 import org.lwjglb.engine.graph.Model;
 import org.lwjglb.engine.graph.Render;
+import org.lwjglb.engine.scene.Camera;
 import org.lwjglb.engine.scene.Entity;
 import org.lwjglb.engine.scene.Scene;
 
@@ -15,13 +17,15 @@ import java.util.List;
 
 public class Main implements IAppLogic {
 
+    private static final float MOUSE_SENSITIVITY = 0.1f;
+    private static final float MOVEMENT_SPEED = 0.005f;
     private Entity cubeEntity;
     private Vector4f displInc = new Vector4f();
     private float rotation;
 
     public static void main(String[] args) {
         Main main = new Main();
-        Engine gameEng = new Engine("chapter-06", new Window.WindowOptions(), main);
+        Engine gameEng = new Engine("chapter-08", new Window.WindowOptions(500, 500), main);
         gameEng.start();
     }
 
@@ -79,10 +83,10 @@ public class Main implements IAppLogic {
         Mesh mesh = new Mesh(positions, colors, indices);
         meshList.add(mesh);
         final String cubeModelId = "cube-model";
-        Model model = new Model(cubeModelId,meshList);
+        Model model = new Model(cubeModelId, meshList);
         scene.addModel(model);
-        cubeEntity = new Entity("cube-entity",cubeModelId);
-        cubeEntity.setPosition(0,0,-2);
+        cubeEntity = new Entity("cube-entity", cubeModelId);
+        cubeEntity.setPosition(0, 0, -2);
         scene.addEntity(cubeEntity);
 
     }
@@ -90,17 +94,17 @@ public class Main implements IAppLogic {
     @Override
     public void input(Window window, Scene scene, long diffTimeMillis) {
         displInc.zero();
-        if(window.isKeyPressed(GLFW.GLFW_KEY_UP)){
-            displInc.y=1;
-        }else if(window.isKeyPressed(GLFW.GLFW_KEY_DOWN)){
-            displInc.y=-1;
+        if (window.isKeyPressed(GLFW.GLFW_KEY_UP)) {
+            displInc.y = 1;
+        } else if (window.isKeyPressed(GLFW.GLFW_KEY_DOWN)) {
+            displInc.y = -1;
         }
         if (window.isKeyPressed(GLFW.GLFW_KEY_LEFT)) {
             displInc.x = -1;
         } else if (window.isKeyPressed(GLFW.GLFW_KEY_RIGHT)) {
             displInc.x = 1;
         }
-        if (window.isKeyPressed(GLFW.GLFW_KEY_A)) {
+        if (window.isKeyPressed(GLFW.GLFW_KEY_E)) {
             displInc.z = -1;
         } else if (window.isKeyPressed(GLFW.GLFW_KEY_Q)) {
             displInc.z = 1;
@@ -111,11 +115,36 @@ public class Main implements IAppLogic {
             displInc.w = 1;
         }
 
+        float move = diffTimeMillis * MOVEMENT_SPEED;
+        Camera camera = scene.getCamera();
+        if (window.isKeyPressed(GLFW.GLFW_KEY_W)) {
+            camera.moveForward(move);
+        } else if (window.isKeyPressed(GLFW.GLFW_KEY_S)) {
+            camera.moveBackwards(move);
+        }
+        if (window.isKeyPressed(GLFW.GLFW_KEY_A)) {
+            camera.moveLeft(move);
+        } else if (window.isKeyPressed(GLFW.GLFW_KEY_D)) {
+            camera.moveRight(move);
+        }
+        if (window.isKeyPressed(GLFW.GLFW_KEY_SPACE)) {
+            camera.moveUp(move);
+        } else if (window.isKeyPressed(GLFW.GLFW_KEY_LEFT_CONTROL)) {
+            camera.moveDown(move);
+        }
 
-        displInc.mul(diffTimeMillis/1000.0f);
+        MouseInput mouseInput = window.getMouseInput();
+        if (mouseInput.isRightButtonPressed()) {
+            Vector2f displVec = mouseInput.getDisplVec();
+            camera.addRotation((float) Math.toRadians(-displVec.x * MOUSE_SENSITIVITY),
+                    (float) Math.toRadians(-displVec.y * MOUSE_SENSITIVITY));
+        }
+
+
+        displInc.mul(diffTimeMillis / 1000.0f);
         Vector3f entityPos = cubeEntity.getPosition();
-        cubeEntity.setPosition(displInc.x  +entityPos.x, displInc.y  +entityPos.y, displInc.z  +entityPos.z);
-        cubeEntity.setScale(cubeEntity.getScale()+displInc.w);
+        cubeEntity.setPosition(displInc.x + entityPos.x, displInc.y + entityPos.y, displInc.z + entityPos.z);
+        cubeEntity.setScale(cubeEntity.getScale() + displInc.w);
         cubeEntity.updateModelMatrix();
 
 
@@ -123,11 +152,11 @@ public class Main implements IAppLogic {
 
     @Override
     public void update(Window window, Scene scene, long diffTimeMillis) {
-        rotation+=1.5;
-        if(rotation > 360) {
+        //rotation += 1.5;
+        if (rotation > 360) {
             rotation = 0;
         }
-        cubeEntity.setRotation(1,1,1,(float)Math.toRadians(rotation));
+        cubeEntity.setRotation(1, 1, 1, (float) Math.toRadians(rotation));
         cubeEntity.updateModelMatrix();
     }
 }

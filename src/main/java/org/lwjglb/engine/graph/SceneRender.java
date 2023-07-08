@@ -28,6 +28,7 @@ public class SceneRender {
         uniformsMap = new UniformsMap(shaderProgram.getProgramId());
         uniformsMap.createUniform("projectionMatrix");
         uniformsMap.createUniform("modelMatrix");
+        uniformsMap.createUniform("viewMatrix");
     }
 
 
@@ -35,6 +36,7 @@ public class SceneRender {
         shaderProgram.bind();
 
         uniformsMap.setUniform("projectionMatrix", scene.getProjection().getProjMatrix());
+        uniformsMap.setUniform("viewMatrix", scene.getCamera().getViewMatrix());
 
         Collection<Model> models = scene.getModelMap().values();
 
@@ -43,7 +45,7 @@ public class SceneRender {
                 glBindVertexArray(mesh.getVaoId());
                 List<Entity> entities = model.getEntitiesList();
                 for (Entity entity : entities) {
-                    uniformsMap.setUniform("modelMatrix",entity.getModelMatrix());
+                    uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
                     glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
                 }
             });
