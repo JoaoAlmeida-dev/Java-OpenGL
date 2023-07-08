@@ -4,14 +4,18 @@ import org.lwjglb.engine.Engine;
 import org.lwjglb.engine.IAppLogic;
 import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Mesh;
+import org.lwjglb.engine.graph.Model;
 import org.lwjglb.engine.graph.Render;
+import org.lwjglb.engine.scene.Entity;
 import org.lwjglb.engine.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class oneDNoiseViewTest implements IAppLogic {
+    private Entity noiseEntity;
 
     public static void main(String[] args) {
         oneDNoiseViewTest main = new noise.oneDNoiseViewTest();
@@ -82,8 +86,21 @@ public class oneDNoiseViewTest implements IAppLogic {
         System.out.println(Arrays.toString(indicesArray));
 
 
+        //scene.addModel("triangle", mesh);
+
+        List<Mesh> meshList = new ArrayList<>();
+
         Mesh mesh = new Mesh(positions, colors, indicesArray);
-        scene.addMesh("triangle", mesh);
+        meshList.add(mesh);
+        final String modelId = "model";
+        Model model = new Model(modelId,meshList);
+        scene.addModel(model);
+        noiseEntity = new Entity("entity",modelId);
+        noiseEntity.setPosition(0,0,-2);
+        scene.addEntity(noiseEntity);
+
+
+
     }
 
     @Override

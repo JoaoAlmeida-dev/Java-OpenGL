@@ -1,28 +1,37 @@
 package org.lwjglb.engine.scene;
 
-import org.lwjglb.engine.graph.Mesh;
+import org.lwjglb.engine.graph.Model;
 
 import java.util.*;
 
 public class Scene {
     private final Projection projection;
-    private Map<String, Mesh> meshMap;
+    private Map<String, Model> modelMap;
 
     public Scene(int width, int height) {
-        meshMap = new HashMap<>();
+        modelMap = new HashMap<>();
         projection = new Projection(width, height);
     }
 
-    public void addMesh(String meshId, Mesh mesh) {
-        meshMap.put(meshId, mesh);
+    public void addEntity(Entity entity){
+        String modelId = entity.getModelId();
+        Model model = modelMap.get(modelId);
+        if (model == null){
+            throw new RuntimeException("Could not find model [" + modelId + "]");
+        }
+        model.getEntitiesList().add(entity);
+    }
+
+    public void addModel(Model model) {
+        modelMap.put(model.getId(), model);
     }
 
     public void cleanup() {
-        meshMap.values().stream().forEach(Mesh::cleanup);
+        modelMap.values().stream().forEach(Model::cleanup);
     }
 
-    public Map<String, Mesh> getMeshMap() {
-        return meshMap;
+    public Map<String, Model> getModelMap() {
+        return modelMap;
     }
 
     public Projection getProjection() {
