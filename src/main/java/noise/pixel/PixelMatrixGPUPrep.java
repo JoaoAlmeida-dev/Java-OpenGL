@@ -78,13 +78,11 @@ public class PixelMatrixGPUPrep {
         float pixelSizey;
         for (int row = 0; row < rawPixelMatrix.length; row++) {
             pixelSizey = Math.abs(yBot - yTop) / rawPixelMatrix[row].length;
-            System.out.println("pixelSizex: " + pixelSizex + "; pixelSizey: " + pixelSizey);
             for (int col = 0; col < rawPixelMatrix[row].length; col++) {
                 float xLeft = this.xLeft + (col * pixelSizex);
                 float xRight = this.xLeft + ((col + 1) * pixelSizex);
                 float yTop = this.yTop - (row * pixelSizey);
                 float yBot = this.yTop - ((row + 1) * pixelSizey);
-                System.out.println("xLeft: " + xLeft + "; xRight: " + xRight + "; yTop: " + yTop + ",yBot: " + yBot);
 
 
                 Vec3 topLeftCorner = new Vec3(xLeft, yTop, z);

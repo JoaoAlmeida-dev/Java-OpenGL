@@ -4,6 +4,8 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
+import noise.oneDNoiseViewTest;
+import org.jetbrains.annotations.NotNull;
 import org.lwjglb.engine.Engine;
 import org.lwjglb.engine.IAppLogic;
 import org.lwjglb.engine.MouseInput;
@@ -18,6 +20,7 @@ import org.lwjglb.engine.scene.Scene;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 public class PixelMain implements IAppLogic {
 
@@ -33,6 +36,18 @@ public class PixelMain implements IAppLogic {
         gameEng.start();
     }
 
+    private static RGB[][] getRgbs(int size, SingleArgInterface createRGB) {
+        RGB[][] rgb_data = new RGB[size][size];
+        float rgbDivision = 256.f / size;
+        Random rand = new Random();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                rgb_data[i][j] = new RGB(createRGB.operation(), createRGB.operation(), createRGB.operation());
+            }
+        }
+        return rgb_data;
+    }
+
     @Override
     public void cleanup() {
 
@@ -40,28 +55,13 @@ public class PixelMain implements IAppLogic {
 
     @Override
     public void init(Window window, Scene scene, Render render) {
-        int size = 20;
-        RGB[][] rgb_data = new RGB[size][size];
-        float rgbDivision = 256.f / size;
-        Random rand = new Random(1);
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int greyscale = rand.nextInt(256);
-                //rgb_data[i][j] = new RGB(greyscale, greyscale, greyscale);
-                //rgb_data[i][j] = new RGB((int) (i * rgbDivision), (int) (j * rgbDivision), (int) (rgbDivision));
-                rgb_data[i][j] = new RGB(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+        int size = 23;
 
-            }
-        }
-        //System.out.println(Arrays.deepToString(rgb_data));
+        Random rand = new Random(1);
+        RGB[][] rgb_data = getRgbs(size, () -> rand.nextInt(256));
 
         PixelMatrix pixelMatrix = new PixelMatrix(rgb_data, -size, size, size, -size);
-        //System.out.println();
-        //System.out.println(pixelMatrix);
         PixelMatrixGPUPrep preparationGPU = pixelMatrix.getPreparationGPU();
-//        System.out.println();
-        //System.out.println(preparationGPU);
-        //scene.addModel("triangle", mesh);
 
         List<Mesh> meshList = new ArrayList<>();
 
@@ -143,5 +143,9 @@ public class PixelMain implements IAppLogic {
     @Override
     public void update(Window window, Scene scene, long diffTimeMillis) {
 
+    }
+
+    interface SingleArgInterface {
+        public int operation();
     }
 }
