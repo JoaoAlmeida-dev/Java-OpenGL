@@ -1,3 +1,4 @@
+/*
 package noise;
 
 import org.lwjglb.engine.Engine;
@@ -68,13 +69,15 @@ public class oneDNoiseViewTest implements IAppLogic {
 
         int[] indicesArray = indices.stream().mapToInt(i -> i).toArray();
 
-  /*      int[] indicesArray = {
+  */
+/*      int[] indicesArray = {
                 0, 1, 2,
                 2, 3, 4,
                 4, 5, 6,
                 6, 7, 8,
                 8, 9, 0
-        };*/
+        };*//*
+
 
         System.out.println("vecPositions");
         System.out.println(Arrays.toString(vecPositions));
@@ -113,3 +116,4 @@ public class oneDNoiseViewTest implements IAppLogic {
         // Nothing to be done yet
     }
 }
+*/

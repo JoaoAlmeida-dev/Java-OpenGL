@@ -1,3 +1,4 @@
+/*
 package noise.pixel;
 
 import org.joml.Vector2f;
@@ -149,3 +150,4 @@ public class PixelMain implements IAppLogic {
         public int operation();
     }
 }
+*/

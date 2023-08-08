@@ -1,6 +1,7 @@
 package org.lwjglb.engine.scene;
 
 import org.lwjglb.engine.graph.Model;
+import org.lwjglb.engine.graph.TextureCache;
 
 import java.util.*;
 
@@ -8,12 +9,13 @@ public class Scene {
     private final Projection projection;
     private Map<String, Model> modelMap;
     private Camera camera;
-
+    private TextureCache textureCache;
 
     public Scene(int width, int height) {
         modelMap = new HashMap<>();
         projection = new Projection(width, height);
         camera = new Camera();
+        textureCache = new TextureCache();
     }
 
     public void addEntity(Entity entity) {
@@ -43,6 +45,10 @@ public class Scene {
 
     public Camera getCamera() {
         return camera;
+    }
+
+    public TextureCache getTextureCache() {
+        return textureCache;
     }
 
     public void resize(int width, int heigth) {
