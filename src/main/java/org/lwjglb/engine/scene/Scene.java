@@ -2,6 +2,8 @@ package org.lwjglb.engine.scene;
 
 import org.lwjglb.engine.graph.Model;
 import org.lwjglb.engine.graph.TextureCache;
+import org.lwjglb.engine.IGuiInstance;
+import org.lwjglb.log.Logger;
 
 import java.util.*;
 
@@ -10,12 +12,14 @@ public class Scene {
     private Map<String, Model> modelMap;
     private Camera camera;
     private TextureCache textureCache;
+    private IGuiInstance guiInstance;
 
     public Scene(int width, int height) {
         modelMap = new HashMap<>();
         projection = new Projection(width, height);
         camera = new Camera();
         textureCache = new TextureCache();
+        Logger.debug("Scene::Scene::Created Scene", "width:" + width, "height:" + height);
     }
 
     public void addEntity(Entity entity) {
@@ -32,7 +36,7 @@ public class Scene {
     }
 
     public void cleanup() {
-        modelMap.values().stream().forEach(Model::cleanup);
+        modelMap.values().forEach(Model::cleanup);
     }
 
     public Map<String, Model> getModelMap() {
@@ -45,6 +49,14 @@ public class Scene {
 
     public Camera getCamera() {
         return camera;
+    }
+
+    public IGuiInstance getGuiInstance() {
+        return guiInstance;
+    }
+
+    public void setGuiInstance(IGuiInstance guiInstance) {
+        this.guiInstance = guiInstance;
     }
 
     public TextureCache getTextureCache() {

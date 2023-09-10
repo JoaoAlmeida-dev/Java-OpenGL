@@ -3,11 +3,12 @@ package org.lwjglb.engine.scene;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+import org.lwjglb.log.Logger;
 
 public class Entity {
     private final String id;
     private final String modelId;
-    private Matrix4f modelMatrix ;
+    private Matrix4f modelMatrix;
     private Vector3f position;
     private Quaternionf rotation;
     private float scale;
@@ -19,6 +20,7 @@ public class Entity {
         position = new Vector3f();
         rotation = new Quaternionf();
         scale = 1;
+        Logger.debug("Entity::entity::contructor", "id:" + id, "modelID:" + modelId);
     }
 
 
@@ -46,6 +48,9 @@ public class Entity {
         return scale;
     }
 
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
 
     public final void setPosition(float x, float y, float z) {
         position.x = x;
@@ -53,12 +58,8 @@ public class Entity {
         position.z = z;
     }
 
-    public void setRotation(float x,float y,float z,float angle) {
-        this.rotation.fromAxisAngleRad(x,y,z,angle);
-    }
-
-    public void setScale(float scale) {
-        this.scale = scale;
+    public void setRotation(float x, float y, float z, float angle) {
+        this.rotation.fromAxisAngleRad(x, y, z, angle);
     }
 
     public void updateModelMatrix() {

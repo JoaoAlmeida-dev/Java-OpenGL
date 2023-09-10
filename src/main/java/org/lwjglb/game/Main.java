@@ -1,5 +1,8 @@
 package org.lwjglb.game;
 
+import imgui.ImGui;
+import imgui.ImGuiIO;
+import imgui.flag.ImGuiCond;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -10,8 +13,9 @@ import org.lwjglb.engine.scene.Camera;
 import org.lwjglb.engine.scene.Entity;
 import org.lwjglb.engine.scene.Scene;
 import org.lwjglb.engine.scene.ModelLoader;
+import org.lwjglb.log.Logger;
 
-public class Main implements IAppLogic {
+public class Main implements IAppLogic, IGuiInstance {
 
     private static final float MOUSE_SENSITIVITY = 0.1f;
     private static final float BASE_MOVEMENT_SPEED = 0.005f;
@@ -21,8 +25,29 @@ public class Main implements IAppLogic {
 
     public static void main(String[] args) {
         Main main = new Main();
-        Engine gameEng = new Engine("chapter-08", new Window.WindowOptions(500, 500), main);
+        Engine gameEng = new Engine("chapter-10", new Window.WindowOptions(500, 500), main);
         gameEng.start();
+    }
+
+    @Override
+    public void drawGui() {
+        ImGui.newFrame();
+        ImGui.setNextWindowPos(0, 0, ImGuiCond.Always);
+        ImGui.showDemoWindow();
+        ImGui.endFrame();
+        ImGui.render();
+    }
+
+    @Override
+    public boolean handleGuiInput(Scene scene, Window window) {
+        ImGuiIO imGuiIO = ImGui.getIO();
+        MouseInput mouseInput = window.getMouseInput();
+        Vector2f mousePos = mouseInput.getCurrentPos();
+        imGuiIO.setMousePos(mousePos.x, mousePos.y);
+        imGuiIO.setMouseDown(0, mouseInput.isLeftButtonPressed());
+        imGuiIO.setMouseDown(1, mouseInput.isRightButtonPressed());
+
+        return imGuiIO.getWantCaptureMouse() || imGuiIO.getWantCaptureKeyboard();
     }
 
     @Override
@@ -32,17 +57,23 @@ public class Main implements IAppLogic {
 
     @Override
     public void init(Window window, Scene scene, Render render) {
+        Logger.debug("IAppLogic::init::init");
         Model cubeModel = ModelLoader.loadModel("cube-model", "src/main/resources/models/cube/cube.obj",
                 scene.getTextureCache());
         scene.addModel(cubeModel);
 
         cubeEntity = new Entity("cube-entity", cubeModel.getId());
-        cubeEntity.setPosition(0, 0, -2);
+        cubeEntity.setPosition(1, 0, -1);
         scene.addEntity(cubeEntity);
+
+        scene.setGuiInstance(this);
     }
 
     @Override
-    public void input(Window window, Scene scene, long diffTimeMillis) {
+    public void input(Window window, Scene scene, long diffTimeMillis, boolean inputConsumed) {
+        if (inputConsumed) {
+            return;
+        }
         float movementSpeed = BASE_MOVEMENT_SPEED;
         displInc.zero();
         if (window.isKeyPressed(GLFW.GLFW_KEY_UP)) {
@@ -86,7 +117,6 @@ public class Main implements IAppLogic {
             camera.moveDown(move);
         }
 
-
         MouseInput mouseInput = window.getMouseInput();
         if (mouseInput.isRightButtonPressed()) {
             Vector2f displVec = mouseInput.getDisplVec();
@@ -94,23 +124,22 @@ public class Main implements IAppLogic {
                     (float) Math.toRadians(-displVec.y * MOUSE_SENSITIVITY));
         }
 
-
         displInc.mul(diffTimeMillis / 1000.0f);
         Vector3f entityPos = cubeEntity.getPosition();
         cubeEntity.setPosition(displInc.x + entityPos.x, displInc.y + entityPos.y, displInc.z + entityPos.z);
         cubeEntity.setScale(cubeEntity.getScale() + displInc.w);
         cubeEntity.updateModelMatrix();
-
-
     }
 
     @Override
     public void update(Window window, Scene scene, long diffTimeMillis) {
-        rotation += 1.5;
+        rotation += .5;
         if (rotation > 360) {
             rotation = 0;
         }
         cubeEntity.setRotation(1, 1, 1, (float) Math.toRadians(rotation));
         cubeEntity.updateModelMatrix();
     }
+
+
 }

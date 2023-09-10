@@ -2,6 +2,7 @@ package org.lwjglb.engine;
 
 import org.lwjglb.engine.graph.Render;
 import org.lwjglb.engine.scene.Scene;
+import org.lwjglb.log.Logger;
 
 public class Engine {
 
@@ -22,10 +23,11 @@ public class Engine {
         targetFps = opts.fps;
         targetUps = opts.ups;
         this.appLogic = appLogic;
-        render = new Render();
+        render = new Render(window);
         scene = new Scene(window.getWidth(), window.getHeight());
         appLogic.init(window, scene, render);
         running = true;
+        Logger.debug("Engine::Engine::Created Engine");
     }
 
     private void cleanup() {
@@ -36,11 +38,16 @@ public class Engine {
     }
 
     private void resize() {
-        scene.resize(window.getWidth(), window.getHeight());
-        // Nothing to be done yet
+        int width = window.getWidth();
+        int height = window.getHeight();
+        scene.resize(width, height);
+        render.resize(width, height);
     }
 
     private void run() {
+
+        IGuiInstance iGuiInstance = scene.getGuiInstance();
+
         long initialTime = System.currentTimeMillis();
         float timeU = 1000.0f / targetUps;
         float timeR = targetFps > 0 ? 1000.0f / targetFps : 0;
@@ -57,7 +64,8 @@ public class Engine {
 
             if (targetFps <= 0 || deltaFps >= 1) {
                 window.getMouseInput().input();
-                appLogic.input(window, scene, now - initialTime);
+                boolean inputConsumed = iGuiInstance != null && iGuiInstance.handleGuiInput(scene, window);
+                appLogic.input(window, scene, now - initialTime, inputConsumed);
             }
 
             if (deltaUpdate >= 1) {

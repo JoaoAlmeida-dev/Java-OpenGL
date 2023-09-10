@@ -30,8 +30,7 @@ public class Mesh {
 
             vaoId = glGenVertexArrays();
             glBindVertexArray(vaoId);
-
-
+            
             //Positions VBO
             int vboId = glGenBuffers();
             vboIdList.add(vboId);
@@ -41,7 +40,6 @@ public class Mesh {
             glBufferData(GL_ARRAY_BUFFER, positionsBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-
 
             //Texture coodinates VBO
             vboId = glGenBuffers();
