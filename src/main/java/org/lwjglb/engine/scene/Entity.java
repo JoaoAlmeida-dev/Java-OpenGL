@@ -23,6 +23,15 @@ public class Entity {
         Logger.debug("Entity::entity::contructor", "id:" + id, "modelID:" + modelId);
     }
 
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "id='" + id + '\'' +
+                ", modelId='" + modelId + '\'' +
+                ", position=" + position +
+                ", scale=" + scale +
+                '}';
+    }
 
     public String getId() {
         return id;

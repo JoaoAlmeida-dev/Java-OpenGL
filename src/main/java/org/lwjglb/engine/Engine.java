@@ -1,5 +1,6 @@
 package org.lwjglb.engine;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjglb.engine.graph.Render;
 import org.lwjglb.engine.scene.Scene;
 import org.lwjglb.log.Logger;
@@ -61,6 +62,7 @@ public class Engine {
             long now = System.currentTimeMillis();
             deltaUpdate += (now - initialTime) / timeU;
             deltaFps += (now - initialTime) / timeR;
+            CharSequence title = "" + deltaFps;
 
             if (targetFps <= 0 || deltaFps >= 1) {
                 window.getMouseInput().input();

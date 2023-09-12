@@ -14,9 +14,9 @@ public class Render {
 
     public Render(Window window) {
         GL.createCapabilities();
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
+//        glEnable(GL_DEPTH_TEST);
+//        glDisable(GL_CULL_FACE);
+//        glCullFace(GL_FRONT);
         sceneRender = new SceneRender();
         guiRender = new GuiRender(window);
     }

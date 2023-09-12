@@ -1,7 +1,5 @@
 package org.lwjglb.log;
 
-import java.util.Arrays;
-
 public class Logger {
 
     public static void debug(Object... messages) {

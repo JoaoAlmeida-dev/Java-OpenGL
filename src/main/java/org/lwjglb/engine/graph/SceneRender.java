@@ -4,6 +4,8 @@ import org.lwjglb.engine.scene.Entity;
 import org.lwjglb.engine.scene.Scene;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.lwjgl.opengl.GL30.*;
 

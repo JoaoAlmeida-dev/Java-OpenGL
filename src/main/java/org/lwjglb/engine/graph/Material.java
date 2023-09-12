@@ -16,12 +16,23 @@ public class Material {
         diffuseColor = DEFAULT_COLOR;
     }
 
+    public Material(Mesh mesh, String texturePath) {
+        meshList = new ArrayList<>();
+        diffuseColor = DEFAULT_COLOR;
+        addMesh(mesh);
+        setTexturePath(texturePath);
+    }
+
     public void cleanup() {
         meshList.forEach(Mesh::cleanup);
     }
 
     public List<Mesh> getMeshList() {
         return meshList;
+    }
+
+    public void addMesh(Mesh mesh) {
+        meshList.add(mesh);
     }
 
     public String getTexturePath() {

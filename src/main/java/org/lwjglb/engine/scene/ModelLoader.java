@@ -102,7 +102,7 @@ public class ModelLoader {
             textCoords = new float[numElements];
         }
 
-        return new Mesh(vertices, textCoords, indices);
+        return MeshFactory.TexturedMesh(vertices, textCoords, indices);
     }
 
     private static int[] processIndices(AIMesh aiMesh) {
@@ -148,5 +148,3 @@ public class ModelLoader {
     }
 
 }
-
-

@@ -16,7 +16,7 @@ public class Gui implements IGuiInstance {
     public void drawGui() {
         ImGui.newFrame();
         ImGui.setNextWindowPos(0, 0, ImGuiCond.Always);
-        ImGui.showDemoWindow();
+//        ImGui.showDemoWindow();
         ImGui.endFrame();
         ImGui.render();
     }
