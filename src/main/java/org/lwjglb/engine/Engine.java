@@ -28,7 +28,7 @@ public class Engine {
         scene = new Scene(window.getWidth(), window.getHeight());
         appLogic.init(window, scene, render);
         running = true;
-        Logger.debug("Engine::Engine::Created Engine");
+        Logger.debug("Engine::Engine", "Created Engine");
     }
 
     private void cleanup() {

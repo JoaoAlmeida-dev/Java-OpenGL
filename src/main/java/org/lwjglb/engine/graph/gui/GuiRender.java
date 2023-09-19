@@ -1,6 +1,7 @@
 package org.lwjglb.engine.graph.gui;
 
 import imgui.*;
+import imgui.flag.ImGuiConfigFlags;
 import imgui.flag.ImGuiKey;
 import imgui.type.ImInt;
 import org.joml.Vector2f;
@@ -50,6 +51,7 @@ public class GuiRender {
         ImGuiIO imGuiIO = ImGui.getIO();
         imGuiIO.setIniFilename(null);
         imGuiIO.setDisplaySize(window.getWidth(), window.getHeight());
+        imGuiIO.setConfigFlags(ImGuiConfigFlags.DockingEnable);
 
         ImFontAtlas fontAtlas = ImGui.getIO().getFonts();
         ImInt width = new ImInt();
@@ -66,12 +68,12 @@ public class GuiRender {
         scale = new Vector2f();
     }
 
-    public void render(Scene scene) {
+    public void render(Scene scene, Window window) {
         IGuiInstance guiInstance = scene.getGuiInstance();
         if (guiInstance == null) {
             return;
         }
-        guiInstance.drawGui();
+        guiInstance.drawGui(window);
 
         shaderProgram.bind();
 

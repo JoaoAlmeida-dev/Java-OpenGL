@@ -31,7 +31,7 @@ public class Render {
         glViewport(0, 0, window.getWidth(), window.getHeight());
 
         sceneRender.render(scene);
-        guiRender.render(scene);
+        guiRender.render(scene, window);
     }
 
     public void resize(int width, int height) {

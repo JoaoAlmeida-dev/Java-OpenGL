@@ -20,7 +20,7 @@ public class Entity {
         position = new Vector3f();
         rotation = new Quaternionf();
         scale = 1;
-        Logger.debug("Entity::entity::contructor", "id:" + id, "modelID:" + modelId);
+        Logger.debug("id:" + id, "modelID:" + modelId);
     }
 
     @Override
