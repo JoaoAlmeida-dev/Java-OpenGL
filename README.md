@@ -20,6 +20,7 @@ Probably should read:
 
 ## Screenshots
 
+![Imgui Console](resources/screenshots/imguiConsole.png)
 ![FirstChunk](resources/screenshots/firstChunk.png)
 ![IIMGUI](resources/screenshots/imgui.jpg)
 ![3D block](resources/screenshots/3dcube_chapter8.png)
