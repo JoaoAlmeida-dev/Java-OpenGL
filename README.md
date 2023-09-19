@@ -6,6 +6,7 @@
 * [GitHub_lwjglbook](https://github.com/lwjglgamedev/lwjglbook)
 * [lwjglbook](https://ahbejarano.gitbook.io/lwjglgamedev/)
 * [usefull video](https://www.youtube.com/watch?v=3HYAtYyLar0)
+* [Let's Make a Voxel Engine](https://sites.google.com/site/letsmakeavoxelengine/home?authuser=0)
 
 ### Should probably follow his other tutorial on vulkan
 
